@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendario</title>
-</head>
-<body>
-    <p>Calendario</p>
-</body>
+  </head>
+  <body>
+    <div
+      role="application"
+      id="calendario"
+      tabindex="-1"
+      aria-live="polite"
+    ></div>
+  </body>
+  <script>
+    const days = [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ];
+    const months = [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre",
+    ];
+
+    const getDateText = (date) =>
+      `${days[date.getDay()]}, ${date.getDate()} de ${
+        months[date.getMonth()]
+      } de ${date.getFullYear()}`;
+
+    const updateCalendar = (numDays) => {
+      now.setDate(now.getDate() + numDays);
+      calendario.textContent = getDateText(now);
+    };
+    const manageDate = (e) => {
+      if (e.key === "ArrowRight") updateCalendar(1);
+      if (e.key === "ArrowLeft") updateCalendar(-1);
+      if (e.key === "ArrowUp") updateCalendar(-7);
+      if (e.key === "ArrowDown") updateCalendar(7);
+    };
+    const calendario = document.getElementById("calendario");
+    calendario.addEventListener("keydown", manageDate);
+    calendario.focus();
+    let now = new Date();
+    setTimeout(() => {
+      calendario.textContent = getDateText(now);
+    }, 100);
+  </script>
 </html>
