@@ -38,15 +38,17 @@
       "diciembre",
     ];
 
-    const getDateText = (date) =>
-      `${days[date.getDay()]}, ${date.getDate()} de ${
-        months[date.getMonth()]
-      } de ${date.getFullYear()}`;
+    const getDateText = () =>
+      `${now.getDate()} de ${months[now.getMonth()]} de ${now.getFullYear()}`;
+
+    const getDateTextComplete = () => `${days[now.getDay()]}, ${getDateText()}`;
 
     const updateCalendar = (numDays) => {
       now.setDate(now.getDate() + numDays);
-      calendario.textContent = getDateText(now);
+      calendario.textContent =
+        Math.abs(numDays) == 7 ? getDateText() : getDateTextComplete();
     };
+
     const manageDate = (e) => {
       if (e.key === "ArrowRight") updateCalendar(1);
       if (e.key === "ArrowLeft") updateCalendar(-1);
@@ -58,7 +60,7 @@
     calendario.focus();
     let now = new Date();
     setTimeout(() => {
-      calendario.textContent = getDateText(now);
+      updateCalendar(0);
     }, 100);
   </script>
 </html>
